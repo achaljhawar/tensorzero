@@ -271,7 +271,6 @@ export * from "./SearchEvaluationRunsResponse";
 export * from "./SearchWorkflowEvaluationRunsResponse";
 export * from "./ServiceTier";
 export * from "./Session";
-export * from "./StaleDatasetResponse";
 export * from "./StaticJSONSchema";
 export * from "./StaticToolConfig";
 export * from "./StaticWeightsConfig";

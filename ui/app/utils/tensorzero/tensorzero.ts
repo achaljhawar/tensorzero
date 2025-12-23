@@ -670,6 +670,25 @@ export class TensorZeroClient extends BaseTensorZeroClient {
   }
 
   /**
+   * Marks all datapoints in a dataset as deleted in a dataset by setting their `staled_at` timestamp.
+   * @param datasetName - The name of the dataset containing the datapoints
+   * @returns A promise that resolves with the response containing the number of marked datapoints
+   * @throws Error if the dataset name is invalid, the IDs array is empty, or the request fails
+   */
+  async deleteDataset(datasetName: string): Promise<DeleteDatapointsResponse> {
+    const endpoint = `/v1/datasets/${encodeURIComponent(datasetName)}`;
+    const response = await this.fetch(endpoint, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      const message = await this.getErrorText(response);
+      this.handleHttpError({ message, response });
+    }
+    const body = (await response.json()) as DeleteDatapointsResponse;
+    return body;
+  }
+
+  /**
    * Clones datapoints to a target dataset, preserving all fields except id and dataset_name.
    * @param targetDatasetName - The name of the target dataset to clone datapoints to
    * @param datapointIds - Array of datapoint UUIDs to clone

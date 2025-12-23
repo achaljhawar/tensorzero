@@ -7,7 +7,6 @@ import type {
   LaunchOptimizationWorkflowParams,
   OptimizationJobHandle,
   OptimizationJobInfo,
-  StaleDatasetResponse,
   KeyInfo,
 } from "./bindings";
 import type {
@@ -72,12 +71,6 @@ export class TensorZeroClient {
     const statusString =
       await this.nativeClient.experimentalPollOptimization(jobHandleString);
     return JSON.parse(statusString) as OptimizationJobInfo;
-  }
-
-  async staleDataset(datasetName: string): Promise<StaleDatasetResponse> {
-    const staleDatasetString =
-      await this.nativeClient.staleDataset(datasetName);
-    return JSON.parse(staleDatasetString) as StaleDatasetResponse;
   }
 
   async getVariantSamplingProbabilities(
