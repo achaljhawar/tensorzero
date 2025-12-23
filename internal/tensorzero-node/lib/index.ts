@@ -72,14 +72,6 @@ export class TensorZeroClient {
       await this.nativeClient.experimentalPollOptimization(jobHandleString);
     return JSON.parse(statusString) as OptimizationJobInfo;
   }
-
-  async getVariantSamplingProbabilities(
-    functionName: string,
-  ): Promise<Record<string, number>> {
-    const probabilitiesString =
-      await this.nativeClient.getVariantSamplingProbabilities(functionName);
-    return JSON.parse(probabilitiesString) as Record<string, number>;
-  }
 }
 
 export default TensorZeroClient;

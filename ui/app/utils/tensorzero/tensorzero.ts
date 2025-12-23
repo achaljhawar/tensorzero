@@ -33,6 +33,7 @@ import type {
   MetricsWithFeedbackResponse,
   Datapoint,
   GetDatapointCountResponse,
+  GetVariantSamplingProbabilitiesResponse,
   DeleteDatapointsRequest,
   DeleteDatapointsResponse,
   GetDemonstrationFeedbackResponse,
@@ -980,6 +981,25 @@ export class TensorZeroClient extends BaseTensorZeroClient {
       this.handleHttpError({ message, response });
     }
     return (await response.json()) as MetricsWithFeedbackResponse;
+  }
+
+  /**
+   * Fetches variant sampling probabilities for a function from the gateway.
+   * @param functionName - The name of the function to get variant sampling probabilities for
+   * @returns A promise that resolves with variant sampling probabilities
+   * @throws Error if the request fails
+   */
+  async getVariantSamplingProbabilities(
+    functionName: string,
+  ): Promise<GetVariantSamplingProbabilitiesResponse> {
+    const endpoint = `/internal/functions/${encodeURIComponent(functionName)}/variant_sampling_probabilities`;
+
+    const response = await this.fetch(endpoint, { method: "GET" });
+    if (!response.ok) {
+      const message = await this.getErrorText(response);
+      this.handleHttpError({ message, response });
+    }
+    return (await response.json()) as GetVariantSamplingProbabilitiesResponse;
   }
 
   /**
