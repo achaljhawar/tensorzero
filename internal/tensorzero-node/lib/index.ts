@@ -1,9 +1,7 @@
 import { createRequire } from "module";
 import type {
   CacheEnabledMode,
-  ClientInferenceParams,
   EvaluationRunEvent,
-  InferenceResponse,
   LaunchOptimizationWorkflowParams,
   OptimizationJobHandle,
   OptimizationJobInfo,
@@ -45,12 +43,6 @@ export class TensorZeroClient {
   static async buildHttp(gatewayUrl: string): Promise<TensorZeroClient> {
     const nativeClient = await NativeTensorZeroClient.buildHttp(gatewayUrl);
     return new TensorZeroClient(nativeClient);
-  }
-
-  async inference(params: ClientInferenceParams): Promise<InferenceResponse> {
-    const paramsString = safeStringify(params);
-    const responseString = await this.nativeClient.inference(paramsString);
-    return JSON.parse(responseString) as InferenceResponse;
   }
 
   async experimentalLaunchOptimizationWorkflow(
